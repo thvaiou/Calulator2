@@ -1,6 +1,7 @@
 package gr.ntua.eestec.thvaiou.calculator2;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -14,6 +15,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class MainActivity extends Activity {
 
@@ -130,7 +138,7 @@ public class MainActivity extends Activity {
                         et.setText(result);
                     }
                 } else if (operator.equals("÷")) {
-                    if (numberTwo.equals("0")) {
+                    if (nTwo == 0) {
                         et.setText("∞");
                     } else {
                         if ((nOne / nTwo)==Math.round(nOne / nTwo)) {
@@ -298,5 +306,86 @@ public class MainActivity extends Activity {
             }
         }
         return;
+    }
+
+    public void btnMplusClicked(View v){
+        new AsyncLoadDatabase().execute();
+    }
+
+    public void btnMminusClicked(View v) {
+        new AsyncRemoveFromDatabase().execute();
+    }
+
+    public void btnMClicked(View v) {
+        new AsyncReturnFromDatabase().execute();
+
+    }
+
+    private class AsyncLoadDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://83.212.112.93/calculator", "thomas", "1234");
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate("Insert into calculator values(" + numberOne + ");");
+                Log.d(TAG, "database");
+                con.close();
+            } catch (Exception e) {
+                Log.d(TAG, e.toString());
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
+    private class AsyncRemoveFromDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://83.212.112.93/calculator", "thomas", "1234");
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate("Delete from calculator;");
+                Log.d(TAG, "database");
+                con.close();
+            } catch (Exception e) {
+                Log.d(TAG, e.toString());
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class AsyncReturnFromDatabase extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://83.212.112.93/calculator", "thomas", "1234");
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("Select * from calculator;");
+                rs.next();
+                numberOne = rs.getString(1);
+                Log.d(TAG, numberOne);
+                Log.d(TAG, "database");
+                con.close();
+            } catch (Exception e) {
+                Log.d(TAG, e.toString());
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Void v) {
+            et.setText(numberOne);
+            textLength = et.getText().length();
+            et.setSelection(textLength, textLength);
+            return;
+        }
     }
 }

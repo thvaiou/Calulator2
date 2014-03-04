@@ -20,22 +20,54 @@
         android:maxLength="16"
         android:typeface="sans"/>
 
-    <TextView
-        android:id="@+id/main_TextView"
-        android:layout_width="272dp"
+    <Button
+        android:id="@+id/main_Mplus"
+        android:layout_width="88dp"
         android:layout_height="50dp"
         android:layout_below="@+id/main_editText"
-        android:background="#333333"
+        android:text="M+"
+        android:textSize="15dp"
+        android:background="@drawable/my_button_selector2"
+        android:textColor="#ffffff"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="3dp"
-        android:layout_marginLeft="3dp"/>
+        android:layout_marginLeft="3dp"
+        android:onClick="btnMplusClicked"/>
+
+    <Button
+        android:id="@+id/main_Mminus"
+        android:layout_width="88dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/main_editText"
+        android:layout_toRightOf="@+id/main_Mplus"
+        android:text="M-"
+        android:textSize="15dp"
+        android:background="@drawable/my_button_selector2"
+        android:textColor="#ffffff"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="3dp"
+        android:onClick="btnMminusClicked"/>
+
+    <Button
+        android:id="@+id/main_M"
+        android:layout_width="88dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/main_editText"
+        android:layout_toRightOf="@+id/main_Mminus"
+        android:text="M"
+        android:textSize="15dp"
+        android:background="@drawable/my_button_selector2"
+        android:textColor="#ffffff"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="3dp"
+        android:onClick="btnMClicked"/>
 
     <Button
         android:id="@+id/main_Delete"
         android:layout_width="88dp"
         android:layout_height="50dp"
         android:layout_below="@+id/main_editText"
-        android:layout_toRightOf="@+id/main_TextView"
+        android:layout_toRightOf="@+id/main_M"
         android:text="DELETE"
         android:textSize="15dp"
         android:background="@drawable/my_button_selector2"
@@ -49,7 +81,7 @@
         android:id="@+id/main_Seven"
         android:layout_width="88dp"
         android:layout_height="88dp"
-        android:layout_below="@+id/main_TextView"
+        android:layout_below="@+id/main_Mplus"
         android:text="7"
         android:textSize="40dp"
         android:background="@drawable/my_button_selector"
@@ -113,7 +145,7 @@
         android:id="@+id/main_Eight"
         android:layout_width="88dp"
         android:layout_height="88dp"
-        android:layout_below="@+id/main_TextView"
+        android:layout_below="@+id/main_Mplus"
         android:layout_toRightOf="@id/main_Seven"
         android:text="8"
         android:textSize="40dp"
@@ -177,7 +209,7 @@
         android:id="@+id/main_Nine"
         android:layout_width="88dp"
         android:layout_height="88dp"
-        android:layout_below="@id/main_TextView"
+        android:layout_below="@id/main_Mplus"
         android:layout_toRightOf="@id/main_Eight"
         android:text="9"
         android:textSize="40dp"
